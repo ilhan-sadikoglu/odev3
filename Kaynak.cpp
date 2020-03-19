@@ -29,24 +29,24 @@ long long recursiveFunction(int numberOfStones)
 long long iterativeFunction(int n)
 {
 	int iki=0,uc = 0, a = n;
-	int adim=0;
-	while (0 <= a) {
+	int yol=0;
+	while (0 <= a) {  //olabilecek maksimum 3 sayısını buluyor
 		a -= 3;
 		uc++;
 	}
 	uc--;
 
-	for (int i = 0; i <= uc; ++i) {
+	for (int i = 0; i <= uc; ++i) { //3lerin sayısını 0 dan başlatarak ilerliyor
 		int b = n - i * 3;
 		
-		iki = 0;
+		iki = 0; //mevcut 3 sayısında en fazla kaç tane 2 olabileceiğini buluyor
 		while (0 <= b) {
 			b -= 2;
 			iki++;
 		}
 		iki--;
-		for (int c = 0; c <= iki; ++c) {
-			int bir = n - (i * 3 + c * 2);
+		for (int c = 0; c <= iki; ++c) { //iki sayısını 0dan başlatarak azaltıyor
+			int bir = n - (i * 3 + c * 2); //mevcut durumda 2 ve 3lerin sayısını kullanarak 1lerin sayısını hesaplıyor
 			cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
 			
 			unsigned long long int fact2 = 1, fact3 = 1,facttop=1;
@@ -69,13 +69,13 @@ long long iterativeFunction(int n)
 
 			
 			if (fact2 * fact3 != 0)
-				adim += facttop / (fact2 * fact3);
+				yol += facttop / (fact2 * fact3); //üç,iki ve bir sayılarının permutasyonunu bularak toplam yol sayısına ekliyor.
 			else cout << "sifira bolme hatasi"<<endl;
 		}
 		
 
 	}
-	return adim;
+	return yol;
 }
 
 
