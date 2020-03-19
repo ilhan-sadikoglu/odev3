@@ -36,7 +36,7 @@ long long iterativeFunction(int n)
 	}
 	uc--;
 
-	for (int i = 0; i <= uc; i++) {
+	for (int i = 0; i <= uc; ++i) {
 		int b = n - i * 3;
 		
 		iki = 0;
@@ -45,35 +45,31 @@ long long iterativeFunction(int n)
 			iki++;
 		}
 		iki--;
-		for (int c = 0; c <= iki; c++) {
+		for (int c = 0; c <= iki; ++c) {
 			int bir = n - (i * 3 + c * 2);
 			cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
 			
-			int fact1 = 1, fact2 = 1, fact3 = 1,facttop=1;
-			if (i > 0) {
-				for (int k = 1; k <= i; k++)
+			unsigned long long int fact2 = 1, fact3 = 1,facttop=1;
+			if (i > 1) {
+				for (int k = 1; k <= i; ++k)
 					fact3 *= k;
 			}
 
-			if (c > 0) {
-				for (int k = 1; k <= c; k++)
+			if (c > 1) {
+				for (int k = 1; k <= c; ++k)
 					fact2 *= k;
 			}
+			
 
-			if (bir > 0) {
-				for (int k = 1; k <= bir; k++)
-					fact1 *= k;
-			}
-
-			if (bir+c+i > 0) {
-				for (int k = 1; k <= (bir + c + i); k++)
+			if (bir+c+i > 1) {
+				for (int k = bir+1; k <= (bir + c + i); ++k)
 					facttop *= k;
 			}
 
 
 			
-			if (fact1 * fact2 * fact3 != 0)
-				adim += facttop / (fact1 * fact2 * fact3);
+			if (fact2 * fact3 != 0)
+				adim += facttop / (fact2 * fact3);
 			else cout << "sifira bolme hatasi"<<endl;
 		}
 		
@@ -92,7 +88,7 @@ int main()
 {
 	cout << setfill(' ');
 
-	for (auto i = 1; i < 30; ++i)
+	for (auto i = 1; i < 50; ++i)
 	{
 		{
 			long long tempResult = { 0 };
