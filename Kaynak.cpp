@@ -45,7 +45,7 @@ long long iterativeFunction(int n)
 			iki++;
 		}
 		iki--;
-		for (int c = 0; c <= iki; ++c) { //iki sayısını 0dan başlatarak azaltıyor
+		for (int c = 0; c <= iki; ++c) { //iki sayısını 0dan başlatarak ilerliyor
 			int bir = n - (i * 3 + c * 2); //mevcut durumda 2 ve 3lerin sayısını kullanarak 1lerin sayısını hesaplıyor
 			cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
 			
