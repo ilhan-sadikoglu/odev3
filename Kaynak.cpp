@@ -35,7 +35,7 @@ long long iterativeFunction(int n)
 		uc++;
 	}
 	uc--;
-	cout << uc<<endl;
+
 	for (int i = 0; i <= uc; i++) {
 		int b = n - i * 3;
 		
@@ -45,22 +45,54 @@ long long iterativeFunction(int n)
 			iki++;
 		}
 		iki--;
+		for (int c = 0; c <= iki; c++) {
+			int bir = n - (i * 3 + c * 2);
+			cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
+			
+			int fact1 = 1, fact2 = 1, fact3 = 1,facttop=1;
+			if (i > 0) {
+				for (int k = 1; k <= i; k++)
+					fact3 *= k;
+			}
+
+			if (c > 0) {
+				for (int k = 1; k <= c; k++)
+					fact2 *= k;
+			}
+
+			if (bir > 0) {
+				for (int k = 1; k <= bir; k++)
+					fact1 *= k;
+			}
+
+			if (bir+c+i > 0) {
+				for (int k = 1; k <= (bir + c + i); k++)
+					facttop *= k;
+			}
+
+
+			
+			if (fact1 * fact2 * fact3 != 0)
+				adim += facttop / (fact1 * fact2 * fact3);
+			else cout << "sifira bolme hatasi"<<endl;
+		}
 		
-		int bir = n - i * 3 - iki * 2;
-		
-		adim += iki+1;
 
 	}
 	return adim;
 }
 
 
+//int bir = n - (i * 3 + iki * 2);
+//cout << "uc " << i << endl << "iki " << iki << endl << "bir " << bir << endl << endl;
+//adim += iki + 1;
+
 // Test icin kullanilacaktir ve bu fonksiyonda bir duzenleme yapilamaz
 int main()
 {
 	cout << setfill(' ');
 
-	for (auto i = 1; i < 100; ++i)
+	for (auto i = 1; i < 30; ++i)
 	{
 		{
 			long long tempResult = { 0 };
