@@ -29,53 +29,86 @@ long long recursiveFunction(int numberOfStones)
 long long iterativeFunction(int n)
 {
 	int iki=0,uc = 0, a = n;
-	int yol=0;
-	while (0 <= a) {  //olabilecek maksimum 3 sayÄ±sÄ±nÄ± buluyor
+	long long adim=0;
+	while (0 <= a) { //olabilecek maksimum 3 adým sayýsýný hesaplýyoruz
 		a -= 3;
 		uc++;
 	}
 	uc--;
 
-	for (int i = 0; i <= uc; ++i) { //3lerin sayÄ±sÄ±nÄ± 0 dan baÅŸlatarak ilerliyor
+	for (int i = 0; i <= uc; ++i) { // 3 adým sayýsý 0 olacak þekilde baþlýyoruz. sonra arttýrarak tekrar ediyoruz
 		int b = n - i * 3;
 		
-		iki = 0; //mevcut 3 sayÄ±sÄ±nda en fazla kaÃ§ tane 2 olabileceiÄŸini buluyor
-		while (0 <= b) {
+		iki = 0;
+		while (0 <= b) {// ayný þekilde maksimum 2 sayýsýný hesaplýyoruz
 			b -= 2;
 			iki++;
 		}
 		iki--;
-		for (int c = 0; c <= iki; ++c) { //iki sayÄ±sÄ±nÄ± 0dan baÅŸlatarak ilerliyor
-			int bir = n - (i * 3 + c * 2); //mevcut durumda 2 ve 3lerin sayÄ±sÄ±nÄ± kullanarak 1lerin sayÄ±sÄ±nÄ± hesaplÄ±yor
-			cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
-			
-			unsigned long long int fact2 = 1, fact3 = 1,facttop=1;
-			if (i > 1) {
-				for (int k = 1; k <= i; ++k)
-					fact3 *= k;
+		for (int c = 0; c <= iki; ++c) {
+			int bir = n - (i * 3 + c * 2);
+			//cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
+			//burdan itibaren permutasyon hesaplanacak
+			vector<int> factop(0);
+			vector<int> fac3(0);
+			vector<int> fac2(0);
+			for(int k=bir+1;k<=(bir+c+i);k++)
+				factop.push_back(k); //birleri görmezden gelerek toplam sýralanacak öge miktarýný ekler
+			for (int k =1; k <= i; k++)
+				fac3.push_back(k);
+			for (int k =1; k <= c; k++)
+				fac2.push_back(k);
+			//sadeleþtirme yapýyoruz
+			int k = factop.size() - 1;
+			for (; k >= 0; k--) {// toplam dizisinin eleman indexi
+				for (int l = fac2.size() - 1; l >= 0; l--) {
+					if (factop[k] % fac2[l] == 0 && fac2[l]!=1) {
+						factop[k] /= fac2[l];
+						fac2[l] = 1;
+					}
+
+				}
+
 			}
-
-			if (c > 1) {
-				for (int k = 1; k <= c; ++k)
-					fact2 *= k;
-			}
+			unsigned long long facttop = 1, factiki = 1, factuc = 1;
+			
+			//sadeleþmiþ hali ile permutasyon hesaplýyoruz
+			if(fac3.size()>0)
+			for (int k = 0; k < fac3.size(); ++k)
+				factuc *= fac3[k];
+			if (fac2.size() > 0)
+			for (int k = 0; k < fac2.size(); ++k)
+				factiki *= fac2[k];
+			if (factop.size() > 0)
+			for (int k = 0; k < factop.size(); ++k)
+				facttop *= factop[k];
 			
 
-			if (bir+c+i > 1) {
-				for (int k = bir+1; k <= (bir + c + i); ++k)
-					facttop *= k;
-			}
-
-
+			factop.clear();
+			fac2.clear();
+			fac3.clear();
+				
 			
-			if (fact2 * fact3 != 0)
-				yol += facttop / (fact2 * fact3); //Ã¼Ã§,iki ve bir sayÄ±larÄ±nÄ±n permutasyonunu bularak toplam yol sayÄ±sÄ±na ekliyor.
-			else cout << "sifira bolme hatasi"<<endl;
+
+
+
+			if (factiki * factuc != 0)
+				adim += facttop / (factiki * factuc); //üç,iki ve bir sayýlarýnýn permutasyonunu bularak toplam yol sayýsýna ekliyor.
+		
+			else cout << "sifira bolme hatasi" << endl;
+			
+			
+
 		}
 		
 
 	}
-	return yol;
+	
+	if (adim < 0) 
+		cout << "long long siniri asilmistir. 84den sonra hata verecektir" << endl << endl;
+		
+	
+	return adim;
 }
 
 
@@ -88,7 +121,7 @@ int main()
 {
 	cout << setfill(' ');
 
-	for (auto i = 1; i < 50; ++i)
+	for (auto i = 1; i < 100; ++i)
 	{
 		{
 			long long tempResult = { 0 };
