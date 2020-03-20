@@ -66,10 +66,21 @@ long long iterativeFunction(int n)
 						factop[k] /= fac2[l];
 						fac2[l] = 1;
 					}
-
 				}
-
 			}
+			k = factop.size() - 1;
+			for (; k >= 0; k--) {// toplam dizisinin eleman indexi
+				for (int l = fac3.size() - 1; l >= 0; l--) {
+					if (factop[k] % fac3[l] == 0 && fac3[l] != 1) {
+						factop[k] /= fac3[l];
+						fac3[l] = 1;
+					}
+				}
+			}
+
+
+
+
 			unsigned long long facttop = 1, factiki = 1, factuc = 1;
 			
 			//sadeleþmiþ hali ile permutasyon hesaplýyoruz
@@ -88,26 +99,14 @@ long long iterativeFunction(int n)
 			fac2.clear();
 			fac3.clear();
 				
-			
-
-
-
 			if (factiki * factuc != 0)
 				adim += facttop / (factiki * factuc); //üç,iki ve bir sayýlarýnýn permutasyonunu bularak toplam yol sayýsýna ekliyor.
 		
 			else cout << "sifira bolme hatasi" << endl;
-			
-			
-
 		}
-		
-
 	}
-	
 	if (adim < 0) 
-		cout << "long long siniri asilmistir. 84den sonra hata verecektir" << endl << endl;
-		
-	
+		cout << "long long siniri asilmistir." << endl << endl;
 	return adim;
 }
 
@@ -121,7 +120,7 @@ int main()
 {
 	cout << setfill(' ');
 
-	for (auto i = 1; i < 100; ++i)
+	for (auto i = 1; i < 73; ++i)
 	{
 		{
 			long long tempResult = { 0 };
@@ -148,3 +147,6 @@ int main()
 
 	return 0;
 }
+
+
+
