@@ -5,12 +5,6 @@
 
 using namespace std;
 
-// Bu odevde global veya statik degisken tanimlanamaz!!!
-
-/* Ozyinelemeli olarak zip zip kurbaganin kac farkli yoldan gittigini bulan fonksiyondur.
- * Bu fonksiyon icinde for ve while kullanamazsiniz ve en az bir kez recursiveFunction
- * fonksiyonu cagri yapilmalidir.
- */
 long long recursiveFunction(int n)
 {
 	static long long int denenenler[100];//kodun optimize calýþmasý için memoization kullandým
@@ -58,10 +52,7 @@ long long recursiveFunction(int n)
 	
 }
 
-/* Yinelemeli olarak zip zip kurbaganin kac farkli yoldan gittigini bulan fonksiyondur.
- * Bu fonksiyon icinde for ve while dongusu kullanilmalidir.
- * Bu fonksiyon icinde baska bir fonksiyona (kendisi dahil) cagri yapilamaz.
- */
+
 long long iterativeFunction(int n)
 {
 	int iki = 0, uc = 0, a = n;
@@ -147,10 +138,6 @@ long long iterativeFunction(int n)
 	return adim;
 }
 
-
-
-
-// Test icin kullanilacaktir ve bu fonksiyonda bir duzenleme yapilamaz
 int main()
 {
 	cout << setfill(' ');
