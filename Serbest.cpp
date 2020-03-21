@@ -13,8 +13,8 @@ using namespace std;
  */
 long long recursiveFunction(int n)
 {
-	static long long int denenenler[100];//kodun optimize calışması için memoization kullandım
-	//2 , 0 ve 1 özel durum-basecase olur 
+	static long long int denenenler[100];//kodun optimize calÃ½Ã¾masÃ½ iÃ§in memoization kullandÃ½m
+	//2 , 0 ve 1 Ã¶zel durum-basecase olur 
 	if (n == 2) 
 		return 2;
 	
@@ -24,15 +24,15 @@ long long recursiveFunction(int n)
 	if (n == 1) 
 		return 1;
 	
-	if(n>2) {//eğer basecase değilse
+	if(n>2) {//eÃ°er basecase deÃ°ilse
 		long long int yol, uc, iki;
 
-		if (denenenler[n] != 0)//eğer daha önceden hesaplanmışsa o değeri kullanır
+		if (denenenler[n] != 0)//eÃ°er daha Ã¶nceden hesaplanmÃ½Ã¾sa o deÃ°eri kullanÃ½r
 			uc = denenenler[n];
 		else
 			uc = recursiveFunction(n - 3);
 
-		if (denenenler[n] != 0)//eğer daha önceden hesaplanmışsa o değeri kullanır
+		if (denenenler[n] != 0)//eÃ°er daha Ã¶nceden hesaplanmÃ½Ã¾sa o deÃ°eri kullanÃ½r
 			iki = denenenler[n];
 		else
 			iki = recursiveFunction(n - 2);
@@ -40,7 +40,7 @@ long long recursiveFunction(int n)
 		yol = uc + iki;
 
 
-		if (denenenler[n] != 0)//eğer daha önceden hesaplanmışsa o değeri kullanır
+		if (denenenler[n] != 0)//eÃ°er daha Ã¶nceden hesaplanmÃ½Ã¾sa o deÃ°eri kullanÃ½r
 			return denenenler[n];
 
 		else {
@@ -66,17 +66,17 @@ long long iterativeFunction(int n)
 {
 	int iki = 0, uc = 0, a = n;
 	long long adim = 0;
-	while (0 <= a) { //olabilecek maksimum 3 adım sayısını hesaplıyoruz
+	while (0 <= a) { //olabilecek maksimum 3 adÃ½m sayÃ½sÃ½nÃ½ hesaplÃ½yoruz
 		a -= 3;
 		uc++;
 	}
 	uc--;
 
-	for (int i = 0; i <= uc; ++i) { // 3 adım sayısı 0 olacak şekilde başlıyoruz. sonra arttırarak tekrar ediyoruz
+	for (int i = 0; i <= uc; ++i) { // 3 adÃ½m sayÃ½sÃ½ 0 olacak Ã¾ekilde baÃ¾lÃ½yoruz. sonra arttÃ½rarak tekrar ediyoruz
 		int b = n - i * 3;
 
 		iki = 0;
-		while (0 <= b) {// aynı şekilde maksimum 2 sayısını hesaplıyoruz
+		while (0 <= b) {// aynÃ½ Ã¾ekilde maksimum 2 sayÃ½sÃ½nÃ½ hesaplÃ½yoruz
 			b -= 2;
 			iki++;
 		}
@@ -92,12 +92,12 @@ long long iterativeFunction(int n)
 
 
 			for (int k = 0; k < (c + i); k++)
-				factop[k]= bir + k+1; //birleri görmezden gelerek toplam sıralanacak öge miktarını ekler
+				factop[k]= bir + k+1; //birleri gÃ¶rmezden gelerek toplam sÃ½ralanacak Ã¶ge miktarÃ½nÃ½ ekler
 			for (int k = 1; k <= i; k++)
 				fac3[k - 1] = k;
 			for (int k = 1; k <= c; k++)
 				fac2[k - 1] = k;
-			//sadeleştirme yapıyoruz
+			//sadeleÃ¾tirme yapÃ½yoruz
 			int k = c + i-1 ;//tekrar bak
 			for (; k >= 0; k--) {// toplam dizisinin eleman indexi
 				for (int l = c - 1; l >= 0; l--) {
@@ -122,7 +122,7 @@ long long iterativeFunction(int n)
 
 			unsigned long long facttop = 1, factiki = 1, factuc = 1;
 
-			//sadeleşmiş hali ile permutasyon hesaplıyoruz
+			//sadeleÃ¾miÃ¾ hali ile permutasyon hesaplÃ½yoruz
 			if (i > 0)
 				for (int k = 0; k < i; ++k)
 					factuc *= fac3[k];
@@ -137,9 +137,9 @@ long long iterativeFunction(int n)
 			
 
 			if (factiki * factuc != 0)
-				adim += facttop / (factiki * factuc); //üç,iki ve bir sayılarının permutasyonunu bularak toplam yol sayısına ekliyor.
+				adim += facttop / (factiki * factuc); //Ã¼Ã§,iki ve bir sayÃ½larÃ½nÃ½n permutasyonunu bularak toplam yol sayÃ½sÃ½na ekliyor.
 
-			else cout << "sifira bolme hatasi" << endl;//sınırı aşması durumunda farkedebilmek için ekledim
+			else cout << "sifira bolme hatasi" << endl;//sÃ½nÃ½rÃ½ aÃ¾masÃ½ durumunda farkedebilmek iÃ§in ekledim
 		}
 	}
 	if (adim < 0)
