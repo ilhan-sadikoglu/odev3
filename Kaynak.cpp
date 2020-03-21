@@ -11,15 +11,51 @@ using namespace std;
  * Bu fonksiyon icinde for ve while kullanamazsiniz ve en az bir kez recursiveFunction
  * fonksiyonu cagri yapilmalidir.
  */
-long long recursiveFunction(int numberOfStones)
+long long recursiveFunction(int n)
 {
+	static long long int denenenler[100];//kodun optimize calýþmasý için memoization kullandým
+	//2 , 0 ve 1 özel durum-basecase olur 
+	if (n == 2) 
+		return 2;
+	
+	if (n == 0) 
+		return 1;
+	
+	if (n == 1) 
+		return 1;
+	
+	if(n>2) {//eðer basecase deðilse
+		long long int yol, uc, iki;
+
+		if (denenenler[n] != 0)//eðer daha önceden hesaplanmýþsa o deðeri kullanýr
+			uc = denenenler[n];
+		else
+			uc = recursiveFunction(n - 3);
+
+		if (denenenler[n] != 0)//eðer daha önceden hesaplanmýþsa o deðeri kullanýr
+			iki = denenenler[n];
+		else
+			iki = recursiveFunction(n - 2);
+
+		yol = uc + iki;
 
 
-	// BURAYI DUZENLEYIN
+		if (denenenler[n] != 0)//eðer daha önceden hesaplanmýþsa o deðeri kullanýr
+			return denenenler[n];
+
+		else {
+
+
+			denenenler[n] = yol + recursiveFunction(n - 1);
+
+			return denenenler[n];
+		}
+	}
 
 
 
-	return 0;
+
+	
 }
 
 /* Yinelemeli olarak zip zip kurbaganin kac farkli yoldan gittigini bulan fonksiyondur.
@@ -28,8 +64,8 @@ long long recursiveFunction(int numberOfStones)
  */
 long long iterativeFunction(int n)
 {
-	int iki=0,uc = 0, a = n;
-	long long adim=0;
+	int iki = 0, uc = 0, a = n;
+	long long adim = 0;
 	while (0 <= a) { //olabilecek maksimum 3 adým sayýsýný hesaplýyoruz
 		a -= 3;
 		uc++;
@@ -38,7 +74,7 @@ long long iterativeFunction(int n)
 
 	for (int i = 0; i <= uc; ++i) { // 3 adým sayýsý 0 olacak þekilde baþlýyoruz. sonra arttýrarak tekrar ediyoruz
 		int b = n - i * 3;
-		
+
 		iki = 0;
 		while (0 <= b) {// ayný þekilde maksimum 2 sayýsýný hesaplýyoruz
 			b -= 2;
@@ -49,28 +85,31 @@ long long iterativeFunction(int n)
 			int bir = n - (i * 3 + c * 2);
 			//cout << "uc " << i << endl << "iki " << c << endl << "bir " << bir << endl << endl;
 			//burdan itibaren permutasyon hesaplanacak
-			vector<int> factop(0);
-			vector<int> fac3(0);
-			vector<int> fac2(0);
-			for(int k=bir+1;k<=(bir+c+i);k++)
-				factop.push_back(k); //birleri görmezden gelerek toplam sýralanacak öge miktarýný ekler
-			for (int k =1; k <= i; k++)
-				fac3.push_back(k);
-			for (int k =1; k <= c; k++)
-				fac2.push_back(k);
+			
+			int factop[100];
+			int fac3[100];
+			int fac2[100];
+
+
+			for (int k = 0; k < (c + i); k++)
+				factop[k]= bir + k+1; //birleri görmezden gelerek toplam sýralanacak öge miktarýný ekler
+			for (int k = 1; k <= i; k++)
+				fac3[k - 1] = k;
+			for (int k = 1; k <= c; k++)
+				fac2[k - 1] = k;
 			//sadeleþtirme yapýyoruz
-			int k = factop.size() - 1;
+			int k = c + i-1 ;//tekrar bak
 			for (; k >= 0; k--) {// toplam dizisinin eleman indexi
-				for (int l = fac2.size() - 1; l >= 0; l--) {
-					if (factop[k] % fac2[l] == 0 && fac2[l]!=1) {
+				for (int l = c - 1; l >= 0; l--) {
+					if (factop[k] % fac2[l] == 0 && fac2[l] != 1) {
 						factop[k] /= fac2[l];
 						fac2[l] = 1;
 					}
 				}
 			}
-			k = factop.size() - 1;
+			k = c + i-1 ;
 			for (; k >= 0; k--) {// toplam dizisinin eleman indexi
-				for (int l = fac3.size() - 1; l >= 0; l--) {
+				for (int l = i - 1; l >= 0; l--) {
 					if (factop[k] % fac3[l] == 0 && fac3[l] != 1) {
 						factop[k] /= fac3[l];
 						fac3[l] = 1;
@@ -82,38 +121,34 @@ long long iterativeFunction(int n)
 
 
 			unsigned long long facttop = 1, factiki = 1, factuc = 1;
-			
+
 			//sadeleþmiþ hali ile permutasyon hesaplýyoruz
-			if(fac3.size()>0)
-			for (int k = 0; k < fac3.size(); ++k)
-				factuc *= fac3[k];
-			if (fac2.size() > 0)
-			for (int k = 0; k < fac2.size(); ++k)
-				factiki *= fac2[k];
-			if (factop.size() > 0)
-			for (int k = 0; k < factop.size(); ++k)
-				facttop *= factop[k];
+			if (i > 0)
+				for (int k = 0; k < i; ++k)
+					factuc *= fac3[k];
+			if (c > 0)
+				for (int k = 0; k < c; ++k)
+					factiki *= fac2[k];
+			if (c + i > 0)
+				for (int k = 0; k < c + i; ++k)
+					facttop *= factop[k];
+
+
 			
 
-			factop.clear();
-			fac2.clear();
-			fac3.clear();
-				
 			if (factiki * factuc != 0)
 				adim += facttop / (factiki * factuc); //üç,iki ve bir sayýlarýnýn permutasyonunu bularak toplam yol sayýsýna ekliyor.
-		
-			else cout << "sifira bolme hatasi" << endl;
+
+			else cout << "sifira bolme hatasi" << endl;//sýnýrý aþmasý durumunda farkedebilmek için ekledim
 		}
 	}
-	if (adim < 0) 
+	if (adim < 0)
 		cout << "long long siniri asilmistir." << endl << endl;
 	return adim;
 }
 
 
-//int bir = n - (i * 3 + iki * 2);
-//cout << "uc " << i << endl << "iki " << iki << endl << "bir " << bir << endl << endl;
-//adim += iki + 1;
+
 
 // Test icin kullanilacaktir ve bu fonksiyonda bir duzenleme yapilamaz
 int main()
