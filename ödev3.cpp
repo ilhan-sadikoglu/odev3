@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//aşağıdaki satırları yoruma alarak kodunuzu farklı şekillerde test edebilirsiniz.
+//aÃ¾aÃ°Ã½daki satÃ½rlarÃ½ yoruma alarak kodunuzu farklÃ½ Ã¾ekillerde test edebilirsiniz.
 #define _TEST_ITERATIVE_
 #define _TEST_RECURSIVE_
 
@@ -18,7 +18,7 @@ using namespace std;
 long long recursiveFunction(int n)
 {
 	
-	//2 , 0 ve 1 özel durum-basecase olur 
+	//2 , 0 ve 1 Ã¶zel durum-basecase olur 
 	if (n == 2)
 		return 2;
 
@@ -28,7 +28,7 @@ long long recursiveFunction(int n)
 	if (n == 1)
 		return 1;
 
-	//diğer durumlarda
+	//diÃ°er durumlarda
 		return (recursiveFunction(n - 3) + recursiveFunction(n - 2)) + recursiveFunction(n - 1);
 
 }
@@ -40,15 +40,13 @@ long long recursiveFunction(int n)
 long long iterativeFunction(int n)
 {
 	int d[100]{ 0 };
-
+// ilk 3 case iÃ§in elle deÄŸer atandÄ±
 	d[1] = 1;
 	d[2] = 2;
 	d[3] = 4;
-
+//bu case'ler kullanÄ±larak istenilen basamaÄŸÄ±n deÄŸeri hesaplandÄ±
 	for (int i=4;i<=n;i++) {
-
 		d[i] = d[i - 1] + d[i - 2] + d[i - 3];
-
 	}
 
 	return d[n];
